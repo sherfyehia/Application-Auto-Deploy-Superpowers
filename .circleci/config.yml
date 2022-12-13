@@ -304,10 +304,10 @@ jobs:
 #             then
 #               # your code here
 #             fi
-  notify_on_failure   
+  notify_on_success:
     docker:
       - image: cimg/base
-    stepsl
+    steps:
       - slack/notify:
         event: pass
         channel: cicd-pipeline
