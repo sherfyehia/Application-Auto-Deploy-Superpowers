@@ -123,7 +123,7 @@ jobs:
             npm install
             npm test
 
-  scan-backend:
+  analyze_backend:
     docker:
       - image: cimg/node:13.8.0
     steps:
