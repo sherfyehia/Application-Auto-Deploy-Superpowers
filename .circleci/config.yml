@@ -134,7 +134,7 @@ jobs:
           name: Back-end Scan
           command: |
             cd backend
-            npm install class-validator --no-audit
+            npm install class-validator --no-audit --force
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
