@@ -134,7 +134,7 @@ jobs:
           name: Back-end Scan
           command: |
             cd backend
-            npm install
+            npm install express@3.0.0
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
@@ -150,7 +150,7 @@ jobs:
           name: Front-end Scan
           command: |
             cd frontend
-            npm install
+            npm install express@3.0.0
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
 
