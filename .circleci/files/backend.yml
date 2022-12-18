@@ -28,7 +28,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: udacity 
+      KeyName: superpower-udacity2
       ImageId: ami-0574da719dca65348
       Tags:
         - Key: Name
