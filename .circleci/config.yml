@@ -92,8 +92,8 @@ commands:
   #         name: Revert migrations
   #         when: on_fail
   #         command: |
-  #           cd ~/project/backend
-  #           if [[ -f "~/project/.circleci/outputs/db_migration_success" ]]; then
+  #           cd ~/Application-Auto-Deploy-Superpowers/backend
+  #           if [[ -f "~/Application-Auto-Deploy-Superpowers/.circleci/outputs/db_migration_success" ]]; then
   #             npm i
   #             npm run migration:revert
   #           fi
@@ -307,31 +307,31 @@ jobs:
   #     - destroy-environment
   #     - revert-migrations
 #################################AMRedit######################################################
-  # run-migrations:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Run DB migrations
-  #         command: |
-  #           cd backend
-  #           npm install
-  #           npm run migrations > migration_output.txt
-  #           cat migration_output.txt
-  #     - run:
-  #         name: Store migration result in a file.
-  #         command: |
-  #           cd backend
-  #           if grep -q "has been executed successfully." migration_output.txt
-  #           then
-  #             echo "success"
-  #             touch ~/project/.circleci/outputs/db_migration_success
-  #           else
-  #             echo "failed"
-  #           fi
+  run-migrations:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run DB migrations
+          command: |
+            cd backend
+            npm install
+            npm run migrations > migration_output.txt
+            cat migration_output.txt
+      - run:
+          name: Store migration result in a file.
+          command: |
+            cd backend
+            if grep -q "has been executed successfully." migration_output.txt
+            then
+              echo "success"
+              touch ~/Application-Auto-Deploy-Superpowers/.circleci/outputs/db_migration_success
+            else
+              echo "failed"
+            fi
 #################################youtubeedit######################################################
   # run-migrations:
   #   docker:
