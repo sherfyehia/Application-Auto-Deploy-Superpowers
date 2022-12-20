@@ -12,9 +12,9 @@
     name: pm2
     global: yes
 #############################youtubeEdit########################33
-- name: "move env variable to /etc/profile.d/"
-  become: true
-  copy:
-    src: myenv.sh
-    dest: /etc/profile.d/
+# - name: "move env variable to /etc/profile.d/"
+#   become: true
+#   copy:
+#     src: myenv.sh
+#     dest: /etc/profile.d/
 ########################################################################

@@ -80,26 +80,8 @@ commands:
   #           fi
 
 
-  # revert-migrations:
-  #   description: Revert the last migration if successfully run in the current workflow.
-  #   parameters:
-  #     Workflow_ID:
-  #       type: string
-  #       default: ${CIRCLE_WORKFLOW_ID:0:7}
-  #   steps:
-  #     - run:
-  #         name: Revert migrations
-  #         when: on_fail
-  #         command: |
-  #           cd ~/project/backend
-  #           if [[ -f "~/project/.circleci/outputs/db_migration_success" ]]; then
-  #             npm i
-  #             npm run migration:revert
-  #           fi
-#################################youtubeedit######################################################
-
   revert-migrations:
-    description: Revert the last migration if successfully happend.
+    description: Revert the last migration if successfully run in the current workflow.
     parameters:
       Workflow_ID:
         type: string
@@ -109,14 +91,32 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure "https://kvdb.io/${KVDB_BUCKET}/migration_<<parameters.Workflow_ID>>")
-            # Logic for reverting the database state
-            if (( $SUCCESS==1 ));
-            then
-              cd ~/project/backend
-              npm install
+            cd ~/project/backend
+            if [[ -f "~/project/.circleci/outputs/db_migration_success" ]]; then
+              npm i
               npm run migration:revert
-            fi  
+            fi
+#################################youtubeedit######################################################
+
+  # revert-migrations:
+  #   description: Revert the last migration if successfully happend.
+  #   parameters:
+  #     Workflow_ID:
+  #       type: string
+  #       default: ${CIRCLE_WORKFLOW_ID:0:7}
+  #   steps:
+  #     - run:
+  #         name: Revert migrations
+  #         when: on_fail
+  #         command: |
+  #           SUCCESS=$(curl --insecure "https://kvdb.io/${KVDB_BUCKET}/migration_<<parameters.Workflow_ID>>")
+  #           # Logic for reverting the database state
+  #           if (( $SUCCESS==1 ));
+  #           then
+  #             cd ~/project/backend
+  #             npm install
+  #             npm run migration:revert
+  #           fi  
 ############################################################################################
 
 
@@ -306,54 +306,54 @@ jobs:
   #     - destroy-environment
   #     - revert-migrations
 
-  # run-migrations:
-  #   docker:
-  #     - image: circleci/node:13.8.0
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: ~/
-  #     - run:
-  #         name: Run DB migrations
-  #         command: |
-  #           cd backend
-  #           npm install
-  #           npm run migrations > migration_output.txt
-  #           cat migration_output.txt
-  #     - run:
-  #         name: Store migration result in a file.
-  #         command: |
-  #           cd backend
-  #           if grep -q "has been executed successfully." migration_output.txt
-  #           then
-  #             echo "success"
-  #             touch ~/project/.circleci/outputs/db_migration_success
-  #           else
-  #             echo "failed"
-  #           fi
-#################################youtubeedit######################################################
   run-migrations:
     docker:
-      - image: cimg/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
-      - install_awscli
+      - attach_workspace:
+          at: ~/
       - run:
-          name: Run migrations
+          name: Run DB migrations
           command: |
             cd backend
             npm install
             npm run migrations > migration_output.txt
             cat migration_output.txt
       - run:
-          name: send migration status to kvdb.io
+          name: Store migration result in a file.
           command: |
-            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            cd backend
+            if grep -q "has been executed successfully." migration_output.txt
             then
-              curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              echo "success"
+              touch ~/project/.circleci/outputs/db_migration_success
+            else
+              echo "failed"
             fi
-      - destroy-environment
-      - revert-migrations
+#################################youtubeedit######################################################
+  # run-migrations:
+  #   docker:
+  #     - image: cimg/node:13.8.0
+  #   steps:
+  #     - checkout
+  #     - install_awscli
+  #     - run:
+  #         name: Run migrations
+  #         command: |
+  #           cd backend
+  #           npm install
+  #           npm run migrations > migration_output.txt
+  #           cat migration_output.txt
+  #     - run:
+  #         name: send migration status to kvdb.io
+  #         command: |
+  #           if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+  #           then
+  #             curl --insecure https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+  #           fi
+  #     - destroy-environment
+  #     - revert-migrations
 ############################################################################################
 #######################################################################################
 
