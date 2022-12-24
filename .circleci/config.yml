@@ -496,8 +496,8 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/files/oldworkflowid.txt
-      - destroy-environment
-      - revert-migrations
+      # - destroy-environment
+      # - revert-migrations
 
   cleanup:
       docker:
@@ -520,8 +520,8 @@ jobs:
                 aws cloudformation delete-stack --stack-name "udacity-backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udacity-frontend-${OldWorkflowID}"
               fi
-        - destroy-environment
-        - revert-migrations
+        # - destroy-environment
+        # - revert-migrations
 
 #  notify_on_success:
 #   docker:
