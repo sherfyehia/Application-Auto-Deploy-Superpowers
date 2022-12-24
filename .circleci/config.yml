@@ -513,7 +513,7 @@ jobs:
               echo Stack names: :"${STACKS[@]}"
 
               export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/OldWorkflowID)
-              echo Old Workflow ID: $OldWorkflowID
+              echo "Old WorkFlow ID : ${OldWorkflowID}"
 
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
