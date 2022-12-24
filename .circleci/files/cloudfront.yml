@@ -30,8 +30,8 @@ Resources:
           ViewerProtocolPolicy: allow-all
 
 Outputs:
-  WorkflowID:
+  BucketIdSuffix:
     Value: !Sub ${ID}
     Description: The id of the workflow. This is used to clean up resources when a new deployment is made.
     Export:
-      Name: WorkflowID
+      Name: UdapeopleWorkflowID
