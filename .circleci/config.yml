@@ -481,7 +481,7 @@ jobs:
           name: save old workflowID
           command: |
             export OldWorkflowID=$(aws cloudformation \
-                      list-exports --query "Exports[?Name==\`sherifWorkflowID\`].Value" \
+                      list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
                       --no-paginate --output text)
             echo "Old WorkFlow ID : ${OldWorkflowID}"
             curl https://kvdb.io/${KVDB_BUCKET}/OldWorkflowID -d "${OldWorkflowID}"
@@ -513,7 +513,7 @@ jobs:
               echo Stack names: :"${STACKS[@]}"
 
               export OldWorkflowID=$(curl --insecure https://kvdb.io/${KVDB_BUCKET}/OldWorkflowID)
-              echo "Old WorkFlow ID : ${OldWorkflowID}"
+              echo Old WorkFlow ID : $OldWorkflowID
 
               if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
               then
