@@ -1,0 +1,5 @@
+public URL to GitHub: https://github.com/sherfyehia/Application-Auto-Deploy-Superpowers.git
+public URL S3 Bucket: http://udapeople-f87cb74.s3-website-us-east-1.amazonaws.com
+public URL for CloudFront : https://d2fc5lc6c8pqmt.cloudfront.net
+public URL Deployed backend : ec2-34-205-76-74.compute-1.amazonaws.com
+public URL for Prometheus Server : ec2-44-204-0-76.compute-1.amazonaws.com
